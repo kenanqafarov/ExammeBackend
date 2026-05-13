@@ -1,8 +1,8 @@
 package com.examme.examme.service;
 
-import com.examme.examme.dto.LoginRequestDto;
-import com.examme.examme.dto.UserDto;
-import com.examme.examme.dto.UserUpdateDto;
+import com.examme.examme.dto.request.auth.LoginRequestDto;
+import com.examme.examme.dto.response.user.UserDto;
+import com.examme.examme.dto.request.user.UserUpdateDto;
 import com.examme.examme.entity.User;
 import com.examme.examme.exception.BadRequestException;
 import com.examme.examme.exception.ConflictException;

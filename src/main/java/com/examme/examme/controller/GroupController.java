@@ -1,8 +1,8 @@
 package com.examme.examme.controller;
 
-import com.examme.examme.dto.ApiResponse;
-import com.examme.examme.dto.GroupRequestDto;
-import com.examme.examme.dto.GroupResponseDto;
+import com.examme.examme.dto.common.ApiResponse;
+import com.examme.examme.dto.request.group.GroupRequestDto;
+import com.examme.examme.dto.response.group.GroupResponseDto;
 import com.examme.examme.service.StudyGroupService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

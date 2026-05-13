@@ -1,6 +1,12 @@
 package com.examme.examme.service;
 
-import com.examme.examme.dto.*;
+import com.examme.examme.dto.request.quiz.QuizStartRequestDto;
+import com.examme.examme.dto.request.quiz.QuizSubmitAnswerDto;
+import com.examme.examme.dto.request.quiz.QuizSubmitRequestDto;
+import com.examme.examme.dto.response.quiz.QuestionResultDetailDto;
+import com.examme.examme.dto.response.quiz.QuizQuestionPublicDto;
+import com.examme.examme.dto.response.quiz.QuizResultDto;
+import com.examme.examme.dto.response.quiz.QuizStartResponseDto;
 import com.examme.examme.entity.*;
 import com.examme.examme.entity.enums.QuizSessionStatus;
 import com.examme.examme.entity.enums.UserRole;

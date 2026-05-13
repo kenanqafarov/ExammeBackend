@@ -1,8 +1,8 @@
 package com.examme.examme.service;
 
-import com.examme.examme.dto.LeaderboardEntryDto;
-import com.examme.examme.dto.MyResultHistoryDto;
-import com.examme.examme.dto.TeacherExamResultRowDto;
+import com.examme.examme.dto.response.leaderboard.LeaderboardEntryDto;
+import com.examme.examme.dto.response.quiz.MyResultHistoryDto;
+import com.examme.examme.dto.projection.TeacherExamResultRowDto;
 import com.examme.examme.entity.ExamPackage;
 import com.examme.examme.entity.QuizAnswer;
 import com.examme.examme.entity.QuizSession;

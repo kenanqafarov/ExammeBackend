@@ -1,8 +1,8 @@
 package com.examme.examme.service;
 
-import com.examme.examme.dto.GroupRequestDto;
-import com.examme.examme.dto.GroupResponseDto;
-import com.examme.examme.dto.StudentBriefDto;
+import com.examme.examme.dto.request.group.GroupRequestDto;
+import com.examme.examme.dto.response.group.GroupResponseDto;
+import com.examme.examme.dto.response.user.StudentBriefDto;
 import com.examme.examme.entity.GroupInvitation;
 import com.examme.examme.entity.Notification;
 import com.examme.examme.entity.StudyGroup;

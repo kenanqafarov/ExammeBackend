@@ -1,9 +1,9 @@
 package com.examme.examme.controller;
 
-import com.examme.examme.dto.QuizResultDto;
-import com.examme.examme.dto.QuizStartRequestDto;
-import com.examme.examme.dto.QuizStartResponseDto;
-import com.examme.examme.dto.QuizSubmitRequestDto;
+import com.examme.examme.dto.response.quiz.QuizResultDto;
+import com.examme.examme.dto.request.quiz.QuizStartRequestDto;
+import com.examme.examme.dto.response.quiz.QuizStartResponseDto;
+import com.examme.examme.dto.request.quiz.QuizSubmitRequestDto;
 import com.examme.examme.service.QuizService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

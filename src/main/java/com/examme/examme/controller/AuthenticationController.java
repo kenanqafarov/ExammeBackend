@@ -1,6 +1,10 @@
 package com.examme.examme.controller;
 
-import com.examme.examme.dto.*;
+import com.examme.examme.dto.common.ApiResponse;
+import com.examme.examme.dto.request.auth.LoginRequestDto;
+import com.examme.examme.dto.request.auth.UserRegistrationDto;
+import com.examme.examme.dto.response.auth.LoginResponseDto;
+import com.examme.examme.dto.response.user.UserDto;
 import com.examme.examme.entity.enums.UserRole;
 import com.examme.examme.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,9 +1,9 @@
 package com.examme.examme.service;
 
-import com.examme.examme.dto.ExamPackageDetailDto;
-import com.examme.examme.dto.ExamPackageSummaryDto;
-import com.examme.examme.dto.QuizQuestionResponseDto;
-import com.examme.examme.dto.QuizQuestionWithAnswerDto;
+import com.examme.examme.dto.response.exam.ExamPackageDetailDto;
+import com.examme.examme.dto.response.exam.ExamPackageSummaryDto;
+import com.examme.examme.dto.response.quiz.QuizQuestionResponseDto;
+import com.examme.examme.dto.response.quiz.QuizQuestionWithAnswerDto;
 import com.examme.examme.entity.ExamPackage;
 import com.examme.examme.entity.QuizQuestion;
 import com.examme.examme.entity.StudyGroup;
