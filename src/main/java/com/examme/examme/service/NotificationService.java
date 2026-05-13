@@ -1,6 +1,6 @@
 package com.examme.examme.service;
 
-import com.examme.examme.dto.NotificationDto;
+import com.examme.examme.dto.common.NotificationDto;
 import com.examme.examme.entity.User;
 import com.examme.examme.exception.NotFoundException;
 import com.examme.examme.repository.NotificationRepository;

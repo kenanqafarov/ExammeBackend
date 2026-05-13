@@ -1,15 +1,15 @@
 package com.examme.examme.service;
 
-import com.examme.examme.dto.LeaderboardEntryDto;
-import com.examme.examme.dto.MyResultHistoryDto;
-import com.examme.examme.dto.TeacherExamResultRowDto;
+import com.examme.examme.dto.response.leaderboard.LeaderboardEntryDto;
+import com.examme.examme.dto.response.quiz.MyResultHistoryDto;
+import com.examme.examme.dto.projection.TeacherExamResultRowDto;
 import com.examme.examme.entity.ExamPackage;
 import com.examme.examme.entity.QuizAnswer;
 import com.examme.examme.entity.QuizSession;
 import com.examme.examme.entity.StudyGroup;
 import com.examme.examme.entity.User;
-import com.examme.examme.enums.QuizSessionStatus;
-import com.examme.examme.enums.UserRole;
+import com.examme.examme.entity.enums.QuizSessionStatus;
+import com.examme.examme.entity.enums.UserRole;
 import com.examme.examme.exception.BadRequestException;
 import com.examme.examme.exception.ForbiddenException;
 import com.examme.examme.exception.NotFoundException;

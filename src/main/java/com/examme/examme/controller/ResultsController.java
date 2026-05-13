@@ -1,8 +1,8 @@
 package com.examme.examme.controller;
 
-import com.examme.examme.dto.LeaderboardEntryDto;
-import com.examme.examme.dto.MyResultHistoryDto;
-import com.examme.examme.dto.TeacherExamResultRowDto;
+import com.examme.examme.dto.response.leaderboard.LeaderboardEntryDto;
+import com.examme.examme.dto.response.quiz.MyResultHistoryDto;
+import com.examme.examme.dto.projection.TeacherExamResultRowDto;
 import com.examme.examme.service.ResultsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

@@ -3,7 +3,7 @@ package com.examme.examme.repository;
 import com.examme.examme.entity.ExamPackage;
 import com.examme.examme.entity.QuizSession;
 import com.examme.examme.entity.User;
-import com.examme.examme.enums.QuizSessionStatus;
+import com.examme.examme.entity.enums.QuizSessionStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

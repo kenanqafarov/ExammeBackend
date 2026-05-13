@@ -1,14 +1,13 @@
 package com.examme.examme.service;
 
-import com.examme.examme.dto.AdminQuizResultRowDto;
-import com.examme.examme.dto.ExamPackageSummaryDto;
-import com.examme.examme.dto.StudyGroupAdminDto;
-import com.examme.examme.dto.UserDto;
+import com.examme.examme.dto.projection.AdminQuizResultRowDto;
+import com.examme.examme.dto.response.exam.ExamPackageSummaryDto;
+import com.examme.examme.dto.projection.StudyGroupAdminDto;
+import com.examme.examme.dto.response.user.UserDto;
 import com.examme.examme.entity.ExamPackage;
 import com.examme.examme.entity.QuizAnswer;
 import com.examme.examme.entity.QuizSession;
-import com.examme.examme.entity.StudyGroup;
-import com.examme.examme.enums.QuizSessionStatus;
+import com.examme.examme.entity.enums.QuizSessionStatus;
 import com.examme.examme.repository.ExamPackageRepository;
 import com.examme.examme.repository.QuizAnswerRepository;
 import com.examme.examme.repository.QuizSessionRepository;

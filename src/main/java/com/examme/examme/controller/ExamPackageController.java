@@ -1,9 +1,9 @@
 package com.examme.examme.controller;
 
-import com.examme.examme.dto.ApiResponse;
-import com.examme.examme.dto.ExamPackageDetailDto;
-import com.examme.examme.dto.ExamPackageSummaryDto;
-import com.examme.examme.enums.Difficulty;
+import com.examme.examme.dto.common.ApiResponse;
+import com.examme.examme.dto.response.exam.ExamPackageDetailDto;
+import com.examme.examme.dto.response.exam.ExamPackageSummaryDto;
+import com.examme.examme.entity.enums.Difficulty;
 import com.examme.examme.service.ExamPackageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

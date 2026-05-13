@@ -1,6 +1,6 @@
 package com.examme.examme.entity;
 
-import com.examme.examme.enums.Difficulty;
+import com.examme.examme.entity.enums.Difficulty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

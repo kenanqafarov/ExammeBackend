@@ -1,6 +1,6 @@
 package com.examme.examme.entity;
 
-import com.examme.examme.enums.UserRole;
+import com.examme.examme.entity.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

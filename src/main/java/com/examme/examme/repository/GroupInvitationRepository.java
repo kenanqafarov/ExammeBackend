@@ -3,7 +3,7 @@ package com.examme.examme.repository;
 import com.examme.examme.entity.GroupInvitation;
 import com.examme.examme.entity.StudyGroup;
 import com.examme.examme.entity.User;
-import com.examme.examme.enums.InvitationStatus;
+import com.examme.examme.entity.enums.InvitationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

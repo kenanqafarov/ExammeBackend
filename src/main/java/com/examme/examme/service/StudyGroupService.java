@@ -1,14 +1,14 @@
 package com.examme.examme.service;
 
-import com.examme.examme.dto.GroupRequestDto;
-import com.examme.examme.dto.GroupResponseDto;
-import com.examme.examme.dto.StudentBriefDto;
+import com.examme.examme.dto.request.group.GroupRequestDto;
+import com.examme.examme.dto.response.group.GroupResponseDto;
+import com.examme.examme.dto.response.user.StudentBriefDto;
 import com.examme.examme.entity.GroupInvitation;
 import com.examme.examme.entity.Notification;
 import com.examme.examme.entity.StudyGroup;
 import com.examme.examme.entity.User;
-import com.examme.examme.enums.InvitationStatus;
-import com.examme.examme.enums.UserRole;
+import com.examme.examme.entity.enums.InvitationStatus;
+import com.examme.examme.entity.enums.UserRole;
 import com.examme.examme.exception.BadRequestException;
 import com.examme.examme.exception.ConflictException;
 import com.examme.examme.exception.ForbiddenException;

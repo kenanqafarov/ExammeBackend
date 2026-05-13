@@ -1,6 +1,6 @@
 package com.examme.examme.controller;
 
-import com.examme.examme.dto.ApiResponse;
+import com.examme.examme.dto.common.ApiResponse;
 import com.examme.examme.service.StudentInvitationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
