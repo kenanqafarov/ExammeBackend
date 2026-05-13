@@ -3,7 +3,7 @@ package com.examme.examme.service;
 import com.examme.examme.entity.GroupInvitation;
 import com.examme.examme.entity.StudyGroup;
 import com.examme.examme.entity.User;
-import com.examme.examme.enums.InvitationStatus;
+import com.examme.examme.entity.enums.InvitationStatus;
 import com.examme.examme.exception.BadRequestException;
 import com.examme.examme.exception.ForbiddenException;
 import com.examme.examme.exception.NotFoundException;

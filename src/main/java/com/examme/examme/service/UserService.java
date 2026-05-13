@@ -8,7 +8,7 @@ import com.examme.examme.exception.BadRequestException;
 import com.examme.examme.exception.ConflictException;
 import com.examme.examme.exception.NotFoundException;
 import com.examme.examme.exception.UnauthorizedException;
-import com.examme.examme.enums.UserRole;
+import com.examme.examme.entity.enums.UserRole;
 import com.examme.examme.repository.UserRepository;
 import com.examme.examme.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;

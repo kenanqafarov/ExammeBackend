@@ -1,7 +1,7 @@
 package com.examme.examme.service;
 
 import com.examme.examme.dto.QuizQuestionResponseDto;
-import com.examme.examme.enums.Difficulty;
+import com.examme.examme.entity.enums.Difficulty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

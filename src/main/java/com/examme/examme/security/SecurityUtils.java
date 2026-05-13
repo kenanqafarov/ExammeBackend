@@ -1,7 +1,7 @@
 package com.examme.examme.security;
 
 import com.examme.examme.exception.UnauthorizedException;
-import com.examme.examme.enums.UserRole;
+import com.examme.examme.entity.enums.UserRole;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

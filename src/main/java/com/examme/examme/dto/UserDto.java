@@ -1,6 +1,6 @@
 package com.examme.examme.dto;
 
-import com.examme.examme.enums.UserRole;
+import com.examme.examme.entity.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
