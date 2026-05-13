@@ -30,30 +30,30 @@ public class ExamPackageController {
     @Operation(summary = "Create exam package from file (Gemini)")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ExamPackageDetailDto> create(
-            @RequestParam Long groupId,
-            @RequestParam MultipartFile file,
-            @RequestParam int questionCount,
-            @RequestParam Difficulty difficulty,
-            @RequestParam(required = false) String description
+            @RequestParam("groupId") Long groupId,
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("questionCount") int questionCount,
+            @RequestParam("difficulty") Difficulty difficulty,
+            @RequestParam(value = "description", required = false) String description
     ) throws IOException {
         return ResponseEntity.ok(examPackageService.create(groupId, file, questionCount, difficulty, description));
     }
 
     @Operation(summary = "List exam packages in a group")
     @GetMapping("/group/{groupId}")
-    public ResponseEntity<List<ExamPackageSummaryDto>> listByGroup(@PathVariable Long groupId) {
+    public ResponseEntity<List<ExamPackageSummaryDto>> listByGroup(@PathVariable("groupId") Long groupId) {
         return ResponseEntity.ok(examPackageService.listForGroup(groupId));
     }
 
     @Operation(summary = "Get exam package with questions")
     @GetMapping("/{id}")
-    public ResponseEntity<ExamPackageDetailDto> get(@PathVariable Long id) {
+    public ResponseEntity<ExamPackageDetailDto> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(examPackageService.getDetail(id));
     }
 
     @Operation(summary = "Delete my exam package")
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse> delete(@PathVariable("id") Long id) {
         examPackageService.delete(id);
         return ResponseEntity.ok(new ApiResponse("Exam package deleted", true));
     }

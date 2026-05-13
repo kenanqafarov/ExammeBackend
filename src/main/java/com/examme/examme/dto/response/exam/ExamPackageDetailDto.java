@@ -22,7 +22,6 @@ public class ExamPackageDetailDto {
     private Long teacherId;
     private Difficulty difficulty;
     private int totalQuestions;
-    private String filePath;
     private LocalDateTime createdAt;
     private List<QuizQuestionWithAnswerDto> questions;
 }

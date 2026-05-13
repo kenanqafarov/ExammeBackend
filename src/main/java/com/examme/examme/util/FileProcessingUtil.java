@@ -16,33 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Slf4j
 @Component
 public class FileProcessingUtil {
-
-    private static final String UPLOAD_DIR = "uploads";
-
-    public FileProcessingUtil() {
-        try {
-            Path path = Paths.get(UPLOAD_DIR);
-            if (!Files.exists(path)) {
-                Files.createDirectories(path);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to create upload directory", e);
-        }
-    }
-
-    public String saveFile(MultipartFile file) throws IOException {
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        Path filePath = Paths.get(UPLOAD_DIR, fileName);
-        Files.write(filePath, file.getBytes());
-        return filePath.toString();
-    }
 
     public String extractTextFromFile(MultipartFile file) throws IOException {
         String filename = file.getOriginalFilename();
@@ -100,7 +77,4 @@ public class FileProcessingUtil {
         return text.toString();
     }
 
-    public void deleteFile(String filePath) throws IOException {
-        Files.deleteIfExists(Paths.get(filePath));
-    }
 }

@@ -2,6 +2,7 @@ package com.examme.examme.service;
 
 import com.examme.examme.dto.response.leaderboard.LeaderboardEntryDto;
 import com.examme.examme.dto.response.quiz.MyResultHistoryDto;
+import com.examme.examme.dto.response.quiz.QuestionResultDetailDto;
 import com.examme.examme.dto.projection.TeacherExamResultRowDto;
 import com.examme.examme.entity.ExamPackage;
 import com.examme.examme.entity.QuizAnswer;
@@ -41,17 +42,17 @@ public class ResultsService {
         User user = userRepository.findByEmail(SecurityUtils.requireCurrentUserEmail())
                 .orElseThrow(() -> new NotFoundException("User not found"));
         if (user.getRole() != UserRole.TEACHER) {
-            throw new ForbiddenException("Yalnız müəllimlər tam nəticə siyahısını görə bilər");
+            throw new ForbiddenException("Only teachers can see the full results list");
         }
         StudyGroup group = studyGroupRepository.findByIdWithStudents(groupId)
                 .orElseThrow(() -> new NotFoundException("Group not found"));
         if (!group.getTeacher().getId().equals(user.getId())) {
-            throw new ForbiddenException("Bu qrup sizə aid deyil");
+            throw new ForbiddenException("This group does not belong to you");
         }
         ExamPackage pkg = examPackageRepository.findById(examPackageId)
                 .orElseThrow(() -> new NotFoundException("Exam package not found"));
         if (!pkg.getGroup().getId().equals(groupId)) {
-            throw new BadRequestException("Paket bu qrupa aid deyil");
+            throw new BadRequestException("This package does not belong to this group");
         }
 
         Set<Long> studentIds = group.getStudents().stream().map(User::getId).collect(Collectors.toSet());
@@ -78,7 +79,7 @@ public class ResultsService {
         ExamPackage pkg = examPackageRepository.findById(examPackageId)
                 .orElseThrow(() -> new NotFoundException("Exam package not found"));
         if (!pkg.getGroup().getId().equals(groupId)) {
-            throw new BadRequestException("Paket bu qrupa aid deyil");
+            throw new BadRequestException("This package does not belong to this group");
         }
 
         Set<Long> studentIds = group.getStudents().stream().map(User::getId).collect(Collectors.toSet());
@@ -110,7 +111,7 @@ public class ResultsService {
         User student = userRepository.findByEmail(SecurityUtils.requireCurrentUserEmail())
                 .orElseThrow(() -> new NotFoundException("User not found"));
         if (student.getRole() != UserRole.STUDENT) {
-            throw new ForbiddenException("Yalnız tələbələr öz tarixçəsini görə bilər");
+            throw new ForbiddenException("Only students can see their own history");
         }
         List<QuizSession> sessions = quizSessionRepository.findStudentHistory(student, QuizSessionStatus.COMPLETED);
         return sessions.stream().map(s -> {
@@ -130,6 +131,7 @@ public class ResultsService {
                     .skipped(skipped)
                     .score(score)
                     .finishedAt(s.getFinishedAt())
+                    .details(ans.stream().map(this::mapToDetailDto).toList())
                     .build();
         }).toList();
     }
@@ -139,7 +141,7 @@ public class ResultsService {
         boolean student = user.getRole() == UserRole.STUDENT
                 && group.getStudents().stream().anyMatch(s -> s.getId().equals(user.getId()));
         if (!teacher && !student) {
-            throw new ForbiddenException("Bu qrupun nəticələrinə çıxışınız yoxdur");
+            throw new ForbiddenException("You do not have access to the results of this group");
         }
     }
 
@@ -179,6 +181,26 @@ public class ResultsService {
                 .skipped(skipped)
                 .score(score)
                 .finishedAt(s.getFinishedAt())
+                .details(ans.stream().map(this::mapToDetailDto).toList())
+                .build();
+    }
+
+    private QuestionResultDetailDto mapToDetailDto(QuizAnswer a) {
+        String status;
+        if (a.getSelectedAnswer() == null) {
+            status = "SKIPPED";
+        } else if (a.isCorrect()) {
+            status = "CORRECT";
+        } else {
+            status = "WRONG";
+        }
+
+        return QuestionResultDetailDto.builder()
+                .questionId(a.getQuestion().getQuestionId())
+                .questionText(a.getQuestion().getQuestionText())
+                .yourAnswer(a.getSelectedAnswer())
+                .correctAnswer(a.getQuestion().getCorrectAnswer())
+                .status(status)
                 .build();
     }
 }

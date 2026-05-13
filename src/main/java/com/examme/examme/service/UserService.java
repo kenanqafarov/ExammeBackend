@@ -11,6 +11,8 @@ import com.examme.examme.exception.UnauthorizedException;
 import com.examme.examme.entity.enums.UserRole;
 import com.examme.examme.repository.UserRepository;
 import com.examme.examme.util.JwtTokenProvider;
+import com.examme.examme.service.RefreshTokenService;
+import com.examme.examme.dto.response.auth.AuthTokens;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RefreshTokenService refreshTokenService;
+    private final com.examme.examme.repository.GroupInvitationRepository groupInvitationRepository;
+    private final com.examme.examme.repository.StudyGroupRepository studyGroupRepository;
+    private final com.examme.examme.repository.NotificationRepository notificationRepository;
+    private final com.examme.examme.repository.QuizSessionRepository quizSessionRepository;
 
     @Transactional
     public User registerUser(String email, String password, String fullName, UserRole role) {
@@ -43,13 +50,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String login(LoginRequestDto loginRequest) {
+    public AuthTokens login(LoginRequestDto loginRequest) {
         User user = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new NotFoundException("User not found"));
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new UnauthorizedException("Invalid credentials");
         }
-        return jwtTokenProvider.generateToken(user.getEmail(), user.getRole().name());
+        String access = jwtTokenProvider.generateToken(user.getEmail(), user.getRole().name());
+        String refresh = refreshTokenService.createRefreshToken(user);
+        return new AuthTokens(access, refresh);
     }
 
     public UserDto getUserByEmail(String email) {
@@ -104,6 +113,35 @@ public class UserService {
         if (!userRepository.existsById(id)) {
             throw new NotFoundException("User not found");
         }
+        User user = requireUserById(id);
+        // remove group invitations
+        try {
+            groupInvitationRepository.deleteAllByStudent(user);
+        } catch (Exception ignored) {}
+
+        // remove notifications
+        try {
+            notificationRepository.findByUserOrderByCreatedAtDesc(user).forEach(n -> notificationRepository.delete(n));
+        } catch (Exception ignored) {}
+
+        // remove user from study groups
+        try {
+            studyGroupRepository.findByStudent(user).forEach(g -> {
+                g.getStudents().remove(user);
+                studyGroupRepository.save(g);
+            });
+        } catch (Exception ignored) {}
+
+        // delete quiz sessions for student
+        try {
+            quizSessionRepository.findByStudent(user).forEach(s -> quizSessionRepository.delete(s));
+        } catch (Exception ignored) {}
+
+        // delete refresh tokens
+        try {
+            refreshTokenService.deleteByUser(user);
+        } catch (Exception ignored) {}
+
         userRepository.deleteById(id);
     }
 

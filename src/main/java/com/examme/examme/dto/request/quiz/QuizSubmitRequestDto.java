@@ -1,5 +1,6 @@
 package com.examme.examme.dto.request.quiz;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,5 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class QuizSubmitRequestDto {
+    @NotEmpty(message = "Answers list cannot be empty")
     private List<QuizSubmitAnswerDto> answers;
 }

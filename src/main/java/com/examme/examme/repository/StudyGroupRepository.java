@@ -14,4 +14,7 @@ public interface StudyGroupRepository extends JpaRepository<StudyGroup, Long> {
 
     @Query("select distinct g from StudyGroup g left join fetch g.students where g.id = :id")
     Optional<StudyGroup> findByIdWithStudents(@Param("id") Long id);
+
+    @Query("select distinct g from StudyGroup g join g.students s where s = :student")
+    List<StudyGroup> findByStudent(@Param("student") User student);
 }

@@ -46,8 +46,6 @@ public class ExamPackage {
     @Column(name = "total_questions", nullable = false)
     private int totalQuestions;
 
-    @Column(name = "file_path", nullable = false, length = 1024)
-    private String filePath;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

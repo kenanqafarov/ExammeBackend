@@ -17,4 +17,5 @@ public class QuizQuestionPublicDto {
     private String optionB;
     private String optionC;
     private String optionD;
+    private String correctAnswer;
 }

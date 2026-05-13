@@ -19,6 +19,8 @@ public class JwtTokenProvider {
 
     @Value("${app.jwtExpirationMs:86400000}") // 24 hours
     private long jwtExpirationMs;
+    @Value("${app.refreshExpirationMs:2592000000}") // 30 days
+    private long refreshExpirationMs;
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
@@ -29,6 +31,22 @@ public class JwtTokenProvider {
         claims.put("role", role);
         claims.put("email", email);
         return createToken(claims, email);
+    }
+
+    public String generateRefreshToken(String email, String role) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role);
+        claims.put("email", email);
+        claims.put("type", "refresh");
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + refreshExpirationMs);
+        return Jwts.builder()
+                .setClaims(claims)
+                .subject(email)
+                .issuedAt(now)
+                .expiration(expiryDate)
+                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+                .compact();
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
@@ -71,6 +89,33 @@ public class JwtTokenProvider {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public boolean isRefreshToken(String token) {
+        try {
+            Object type = Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .get("type");
+            return "refresh".equals(type);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public Date getExpiryDateFromToken(String token) {
+        try {
+            return Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .getExpiration();
+        } catch (Exception e) {
+            return null;
         }
     }
 }

@@ -8,6 +8,7 @@ import com.examme.examme.service.QuizService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,15 +25,15 @@ public class QuizController {
 
     @Operation(summary = "Start quiz session")
     @PostMapping("/start")
-    public ResponseEntity<QuizStartResponseDto> start(@RequestBody QuizStartRequestDto body) {
+    public ResponseEntity<QuizStartResponseDto> start(@Valid @RequestBody QuizStartRequestDto body) {
         return ResponseEntity.ok(quizService.start(body));
     }
 
     @Operation(summary = "Submit quiz answers")
     @PostMapping("/{sessionId}/submit")
     public ResponseEntity<QuizResultDto> submit(
-            @PathVariable Long sessionId,
-            @RequestBody QuizSubmitRequestDto body
+            @PathVariable("sessionId") Long sessionId,
+            @Valid @RequestBody QuizSubmitRequestDto body
     ) {
         return ResponseEntity.ok(quizService.submit(sessionId, body));
     }

@@ -26,8 +26,8 @@ public class ResultsController {
     @Operation(summary = "Teacher: full results for an exam in a group")
     @GetMapping("/group/{groupId}/exam/{examPackageId}")
     public ResponseEntity<List<TeacherExamResultRowDto>> teacherResults(
-            @PathVariable Long groupId,
-            @PathVariable Long examPackageId
+            @PathVariable("groupId") Long groupId,
+            @PathVariable("examPackageId") Long examPackageId
     ) {
         return ResponseEntity.ok(resultsService.teacherGroupExamResults(groupId, examPackageId));
     }
@@ -35,8 +35,8 @@ public class ResultsController {
     @Operation(summary = "Student/Teacher: leaderboard for an exam")
     @GetMapping("/group/{groupId}/exam/{examPackageId}/leaderboard")
     public ResponseEntity<List<LeaderboardEntryDto>> leaderboard(
-            @PathVariable Long groupId,
-            @PathVariable Long examPackageId
+            @PathVariable("groupId") Long groupId,
+            @PathVariable("examPackageId") Long examPackageId
     ) {
         return ResponseEntity.ok(resultsService.studentLeaderboard(groupId, examPackageId));
     }

@@ -57,7 +57,6 @@ public class ExamPackageService {
             throw new ForbiddenException("Bu qrup sizə aid deyil");
         }
 
-        String filePath = fileProcessingUtil.saveFile(file);
         String extracted = fileProcessingUtil.extractTextFromFile(file);
         if (extracted.length() > MAX_TEXT_CHARS) {
             extracted = extracted.substring(0, MAX_TEXT_CHARS);
@@ -74,7 +73,6 @@ public class ExamPackageService {
                 .teacher(teacher)
                 .difficulty(difficulty)
                 .totalQuestions(generated.size())
-                .filePath(filePath)
                 .build();
 
         List<QuizQuestion> questions = new ArrayList<>();
@@ -146,11 +144,6 @@ public class ExamPackageService {
         if (!pkg.getTeacher().getId().equals(user.getId())) {
             throw new ForbiddenException("Yalnız öz paketlərinizi silə bilərsiniz");
         }
-        try {
-            fileProcessingUtil.deleteFile(pkg.getFilePath());
-        } catch (IOException ignored) {
-            // file may already be missing
-        }
         examPackageRepository.delete(pkg);
     }
 
@@ -192,7 +185,6 @@ public class ExamPackageService {
                 .teacherId(pkg.getTeacher().getId())
                 .difficulty(pkg.getDifficulty())
                 .totalQuestions(pkg.getTotalQuestions())
-                .filePath(pkg.getFilePath())
                 .createdAt(pkg.getCreatedAt())
                 .questions(qs)
                 .build();

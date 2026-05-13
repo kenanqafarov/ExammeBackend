@@ -37,26 +37,26 @@ public class AdminController {
 
     @Operation(summary = "Get user by id")
     @GetMapping("/users/{id}")
-    public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
+    public ResponseEntity<UserDto> getUser(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @Operation(summary = "Update any user")
     @PutMapping("/users/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserUpdateDto dto) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody UserUpdateDto dto) {
         return ResponseEntity.ok(userService.updateUser(id, dto));
     }
 
     @Operation(summary = "Delete user")
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse> deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok(new ApiResponse("User deleted", true));
     }
 
     @Operation(summary = "Change user role")
     @PutMapping("/users/{id}/role")
-    public ResponseEntity<UserDto> updateRole(@PathVariable Long id, @RequestBody RoleUpdateDto dto) {
+    public ResponseEntity<UserDto> updateRole(@PathVariable("id") Long id, @RequestBody RoleUpdateDto dto) {
         return ResponseEntity.ok(userService.updateUserRole(id, dto.getRole()));
     }
 
@@ -68,7 +68,7 @@ public class AdminController {
 
     @Operation(summary = "Delete any group")
     @DeleteMapping("/groups/{id}")
-    public ResponseEntity<ApiResponse> deleteGroup(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse> deleteGroup(@PathVariable("id") Long id) {
         adminPanelService.deleteGroup(id);
         return ResponseEntity.ok(new ApiResponse("Group deleted", true));
     }
@@ -81,7 +81,7 @@ public class AdminController {
 
     @Operation(summary = "Delete any exam package")
     @DeleteMapping("/exam-packages/{id}")
-    public ResponseEntity<ApiResponse> deleteExamPackage(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse> deleteExamPackage(@PathVariable("id") Long id) {
         adminPanelService.deleteExamPackage(id);
         return ResponseEntity.ok(new ApiResponse("Exam package deleted", true));
     }

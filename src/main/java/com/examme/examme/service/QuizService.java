@@ -38,7 +38,7 @@ public class QuizService {
         User student = userRepository.findByEmail(SecurityUtils.requireCurrentUserEmail())
                 .orElseThrow(() -> new NotFoundException("User not found"));
         if (student.getRole() != UserRole.STUDENT) {
-            throw new ForbiddenException("Yalnız tələbələr testə başlaya bilər");
+            throw new ForbiddenException("Only students can start a test");
         }
         ExamPackage pkg = examPackageRepository.findById(req.getExamPackageId())
                 .orElseThrow(() -> new NotFoundException("Exam package not found"));
@@ -46,18 +46,18 @@ public class QuizService {
                 .orElseThrow(() -> new NotFoundException("Group not found"));
         boolean member = group.getStudents().stream().anyMatch(s -> s.getId().equals(student.getId()));
         if (!member) {
-            throw new ForbiddenException("Bu qrupun imtahanına çıxışınız yoxdur");
+            throw new ForbiddenException("You do not have access to this group's exams");
         }
 
         int range = req.getToQuestion() - req.getFromQuestion() + 1;
         if (range < req.getSelectedCount()) {
-            throw new BadRequestException("Seçilmiş sual sayı aralığa sığmır");
+            throw new BadRequestException("Selected question count exceeds the available range");
         }
 
         List<QuizQuestion> pool = quizQuestionRepository.findByExamPackageAndQuestionIdBetweenOrderByQuestionIdAsc(
                 pkg, req.getFromQuestion(), req.getToQuestion());
         if (pool.size() < req.getSelectedCount()) {
-            throw new BadRequestException("Bu aralıqda kifayət qədər sual yoxdur");
+            throw new BadRequestException("Not enough questions available in this range");
         }
 
         List<QuizQuestion> picked = new ArrayList<>(pool);
@@ -89,10 +89,10 @@ public class QuizService {
         QuizSession session = quizSessionRepository.findByIdWithSelectedQuestions(sessionId)
                 .orElseThrow(() -> new NotFoundException("Session not found"));
         if (!session.getStudent().getId().equals(student.getId())) {
-            throw new ForbiddenException("Bu sessiya sizə aid deyil");
+            throw new ForbiddenException("This session does not belong to you");
         }
         if (session.getStatus() != QuizSessionStatus.IN_PROGRESS) {
-            throw new BadRequestException("Sessiya artıq tamamlanıb");
+            throw new BadRequestException("Session is already completed");
         }
 
         Map<Integer, QuizSubmitAnswerDto> byQuestionNumber = new HashMap<>();
@@ -180,6 +180,7 @@ public class QuizService {
                 .optionB(q.getOptionB())
                 .optionC(q.getOptionC())
                 .optionD(q.getOptionD())
+                .correctAnswer(q.getCorrectAnswer())
                 .build();
     }
 }

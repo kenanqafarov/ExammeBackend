@@ -1,6 +1,8 @@
 package com.examme.examme.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,9 +27,12 @@ public class StudyGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Group name is required")
+    @Size(max = 100, message = "Group name is too long")
     @Column(nullable = false)
     private String name;
 
+    @Size(max = 2000, message = "Description is too long")
     @Column(length = 2000)
     private String description;
 

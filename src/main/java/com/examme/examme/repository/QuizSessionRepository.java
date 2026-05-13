@@ -25,6 +25,8 @@ public interface QuizSessionRepository extends JpaRepository<QuizSession, Long> 
     @Query("select s from QuizSession s join fetch s.examPackage ep join fetch ep.group where s.student = :student and s.status = :status order by s.finishedAt desc")
     List<QuizSession> findStudentHistory(@Param("student") User student, @Param("status") QuizSessionStatus status);
 
+    List<QuizSession> findByStudent(User student);
+
     @Query("select s from QuizSession s join fetch s.student join fetch s.examPackage ep join fetch ep.group where s.status = :st order by s.finishedAt desc")
     List<QuizSession> findAllCompletedWithDetails(@Param("st") QuizSessionStatus status);
 }

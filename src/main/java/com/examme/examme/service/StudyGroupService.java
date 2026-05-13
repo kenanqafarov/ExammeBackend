@@ -98,15 +98,15 @@ public class StudyGroupService {
                 .orElseThrow(() -> new NotFoundException("Group not found"));
         assertTeacherOwns(group);
         User student = userRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Bu email ilə qeydiyyatdan keçmiş tələbə tapılmadı"));
+                .orElseThrow(() -> new NotFoundException("Student with this email not found"));
         if (student.getRole() != UserRole.STUDENT) {
-            throw new BadRequestException("Bu email tələbə hesabına aid deyil");
+            throw new BadRequestException("This email does not belong to a student account");
         }
         if (group.getStudents().contains(student)) {
-            throw new ConflictException("Tələbə artıq qrupdadır");
+            throw new ConflictException("Student is already in the group");
         }
         if (groupInvitationRepository.existsByGroupAndStudentAndStatus(group, student, InvitationStatus.PENDING)) {
-            throw new ConflictException("Bu tələbə üçün gözləyən dəvət artıq mövcuddur");
+            throw new ConflictException("A pending invitation already exists for this student");
         }
         GroupInvitation invitation = GroupInvitation.builder()
                 .group(group)
@@ -115,7 +115,7 @@ public class StudyGroupService {
                 .build();
         invitation = groupInvitationRepository.save(invitation);
 
-        String message = "Siz \"" + group.getName() + "\" qrupuna əlavə edilmək üçün dəvət aldınız";
+        String message = "You have been invited to join the group \"" + group.getName() + "\"";
         notificationRepository.save(Notification.builder()
                 .user(student)
                 .message(message)
@@ -125,7 +125,7 @@ public class StudyGroupService {
 
         mailService.sendPlainText(
                 student.getEmail(),
-                "Qrup dəvəti",
+                "Group Invitation",
                 message
         );
     }
@@ -144,7 +144,7 @@ public class StudyGroupService {
         boolean teacher = group.getTeacher().getId().equals(user.getId());
         boolean student = group.getStudents().stream().anyMatch(s -> s.getId().equals(user.getId()));
         if (!teacher && !student) {
-            throw new ForbiddenException("Bu qrupa çıxışınız yoxdur");
+            throw new ForbiddenException("You do not have access to this group");
         }
         return group;
     }
@@ -153,18 +153,23 @@ public class StudyGroupService {
         User current = userRepository.findByEmail(SecurityUtils.requireCurrentUserEmail())
                 .orElseThrow(() -> new NotFoundException("User not found"));
         if (!group.getTeacher().getId().equals(current.getId())) {
-            throw new ForbiddenException("Bu qrup sizə aid deyil");
+            throw new ForbiddenException("This group does not belong to you");
         }
     }
 
     private GroupResponseDto toSummaryDto(StudyGroup group) {
+        List<StudentBriefDto> students = group.getStudents() == null ? List.of() : group.getStudents().stream()
+                .map(u -> StudentBriefDto.builder().id(u.getId()).fullName(u.getFullName()).email(u.getEmail()).build())
+                .toList();
+
         return GroupResponseDto.builder()
                 .id(group.getId())
                 .name(group.getName())
                 .description(group.getDescription())
                 .teacherId(group.getTeacher().getId())
-                .studentCount(group.getStudents() != null ? group.getStudents().size() : 0)
+                .studentCount(students.size())
                 .createdAt(group.getCreatedAt())
+                .students(students)
                 .build();
     }
 }

@@ -21,14 +21,14 @@ public class InvitationController {
 
     @Operation(summary = "Accept group invitation")
     @PostMapping("/{invitationId}/accept")
-    public ResponseEntity<ApiResponse> accept(@PathVariable Long invitationId) {
+    public ResponseEntity<ApiResponse> accept(@PathVariable("invitationId") Long invitationId) {
         studentInvitationService.accept(invitationId);
         return ResponseEntity.ok(new ApiResponse("Invitation accepted", true));
     }
 
     @Operation(summary = "Reject group invitation")
     @PostMapping("/{invitationId}/reject")
-    public ResponseEntity<ApiResponse> reject(@PathVariable Long invitationId) {
+    public ResponseEntity<ApiResponse> reject(@PathVariable("invitationId") Long invitationId) {
         studentInvitationService.reject(invitationId);
         return ResponseEntity.ok(new ApiResponse("Invitation rejected", true));
     }
