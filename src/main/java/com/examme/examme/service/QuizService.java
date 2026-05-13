@@ -2,8 +2,8 @@ package com.examme.examme.service;
 
 import com.examme.examme.dto.*;
 import com.examme.examme.entity.*;
-import com.examme.examme.enums.QuizSessionStatus;
-import com.examme.examme.enums.UserRole;
+import com.examme.examme.entity.enums.QuizSessionStatus;
+import com.examme.examme.entity.enums.UserRole;
 import com.examme.examme.exception.BadRequestException;
 import com.examme.examme.exception.ForbiddenException;
 import com.examme.examme.exception.NotFoundException;

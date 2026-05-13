@@ -1,6 +1,6 @@
 package com.examme.examme.dto;
 
-import com.examme.examme.enums.Difficulty;
+import com.examme.examme.entity.enums.Difficulty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.examme.examme.entity;
 
-import com.examme.examme.enums.InvitationStatus;
+import com.examme.examme.entity.enums.InvitationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

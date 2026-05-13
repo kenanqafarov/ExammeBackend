@@ -1,7 +1,7 @@
 package com.examme.examme.controller;
 
 import com.examme.examme.dto.*;
-import com.examme.examme.enums.UserRole;
+import com.examme.examme.entity.enums.UserRole;
 import com.examme.examme.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

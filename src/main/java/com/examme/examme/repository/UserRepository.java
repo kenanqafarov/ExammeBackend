@@ -1,7 +1,7 @@
 package com.examme.examme.repository;
 
 import com.examme.examme.entity.User;
-import com.examme.examme.enums.UserRole;
+import com.examme.examme.entity.enums.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     List<User> findByRole(UserRole role);
+
+    boolean existsByEmail(String email);
+
 }
